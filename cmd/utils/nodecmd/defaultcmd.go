@@ -209,8 +209,8 @@ func BeforeRunNode(ctx *cli.Context) error {
 
 	currCPU := runtime.GOMAXPROCS(0)
 	fmt.Println("===CPU Cores: ", currCPU)
-	if currCPU > 8 {
-		runtime.GOMAXPROCS(8)
+	if currCPU > 4 {
+		runtime.GOMAXPROCS(4)
 		fmt.Println("Limiting CPU Cores to ", runtime.GOMAXPROCS(0))
 	}
 
@@ -248,11 +248,11 @@ var migrationApplied = map[*cli.Command]struct{}{}
 //
 // Example:
 //
-//    ken account new --keystore /tmp/mykeystore --lightkdf
+//	ken account new --keystore /tmp/mykeystore --lightkdf
 //
 // is equivalent after calling this method with:
 //
-//    ken --keystore /tmp/mykeystore --lightkdf account new
+//	ken --keystore /tmp/mykeystore --lightkdf account new
 //
 // i.e. in the subcommand Action function of 'account new', ctx.Bool("lightkdf)
 // will return true even if --lightkdf is set as a global option.
