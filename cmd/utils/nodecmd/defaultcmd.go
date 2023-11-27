@@ -206,6 +206,14 @@ func BeforeRunNode(ctx *cli.Context) error {
 		return err
 	}
 	runtime.GOMAXPROCS(runtime.NumCPU())
+
+	currCPU := runtime.GOMAXPROCS(0)
+	fmt.Println("===CPU Cores: ", currCPU)
+	if currCPU > 8 {
+		runtime.GOMAXPROCS(8)
+		fmt.Println("Limiting CPU Cores to ", runtime.GOMAXPROCS(0))
+	}
+
 	logDir := (&node.Config{DataDir: utils.MakeDataDir(ctx)}).ResolvePath("logs")
 	debug.CreateLogDir(logDir)
 	if err := debug.Setup(ctx); err != nil {
